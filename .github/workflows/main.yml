@@ -10,6 +10,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -21,18 +22,18 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd secret-key
+          cd SecretKey
           npm ci
 
       - name: Build Vite project
         run: |
-          cd secret-key
+          cd SecretKey
           npm run build
 
       - name: Copy output to root-level folder
         run: |
           mkdir -p dist-root
-          cp -r secret-key/dist/* dist-root/
+          cp -r SecretKey/dist/* dist-root/
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
