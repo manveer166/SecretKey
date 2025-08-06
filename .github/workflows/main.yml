@@ -23,8 +23,7 @@ jobs:
       - name: Install dependencies
         run: |
           cd SecretKey
-          npm ci
-
+          npm install
       - name: Build Vite project
         run: |
           cd SecretKey
