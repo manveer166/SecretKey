@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CipherShift</title>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;max-width:820px;margin:40px auto;padding:0 16px}
+    h1{margin-top:0}
+    label{font-weight:600}
+    textarea,input{width:100%;box-sizing:border-box;padding:10px;margin:6px 0 16px;border:1px solid #ccc;border-radius:8px}
+    .row{display:flex;gap:12px;flex-wrap:wrap}
+    .row > *{flex:1}
+    button{padding:10px 14px;border:1px solid #ccc;border-radius:8px;background:#f6f6f6;cursor:pointer}
+    button:active{transform:translateY(1px)}
+    .muted{color:#666;font-size:14px}
+  </style>
+</head>
+<body>
+  <h1>CipherShift</h1>
+  <p class="muted">Shift letters by a per-character key (a→1, b→2, …, z→26). Non‑letters stay the same.</p>
+
+  <label for="key">Key (e.g., <code>a</code> or <code>ab</code>):</label>
+  <input id="key" placeholder="Enter key like abcz" />
+
+  <label for="plain">Original text</label>
+  <textarea id="plain" rows="6" placeholder="Type or paste text..."></textarea>
+
+  <div class="row">
+    <button id="encryptBtn">Encrypt ➜</button>
+    <button id="decryptBtn">Decrypt ➜</button>
+  </div>
+
+  <label for="cipher">Result</label>
+  <textarea id="cipher" rows="6" placeholder="Result appears here..."></textarea>
+
+  <div class="row">
+    <button id="copyResult">Copy result</button>
+    <button id="copyOriginal">Copy original</button>
+  </div>
+
+  <script>
+    function shiftChar(ch, n){
+      const A='A'.charCodeAt(0), Z='Z'.charCodeAt(0);
+      const a='a'.charCodeAt(0), z='z'.charCodeAt(0);
+      const c=ch.charCodeAt(0);
+      if(c>=A && c<=Z) return String.fromCharCode(((c-A+n)%26+26)%26 + A);
+      if(c>=a && c<=z) return String.fromCharCode(((c-a+n)%26+26)%26 + a);
+      return ch;
+    }
+    function keyToShifts(key){
+      return key.split('').map(k=>{
+        const code=k.toLowerCase().charCodeAt(0);
+        if(code>=97 && code<=122) return (code-96); // a=1 .. z=26
+        return 0;
+      });
+    }
+    function applyCipher(text, key, mode='enc'){
+      const shifts=keyToShifts(key);
+      if(shifts.length===0) return text;
+      let i=0, out='';
+      for(const ch of text){
+        const n=shifts[i % shifts.length];
+        out += mode==='enc' ? shiftChar(ch, n) : shiftChar(ch, -n);
+        i += /[A-Za-z]/.test(ch) ? 1 : 0; // advance key only on letters
+      }
+      return out;
+    }
+
+    const plain=document.getElementById('plain');
+    const cipher=document.getElementById('cipher');
+    const key=document.getElementById('key');
+
+    document.getElementById('encryptBtn').onclick=()=>{
+      cipher.value = applyCipher(plain.value, key.value, 'enc');
+    };
+    document.getElementById('decryptBtn').onclick=()=>{
+      plain.value = applyCipher(cipher.value, key.value, 'dec');
+    };
+    document.getElementById('copyResult').onclick=()=>{ navigator.clipboard.writeText(cipher.value); };
+    document.getElementById('copyOriginal').onclick=()=>{ navigator.clipboard.writeText(plain.value); };
+  </script>
+</body>
+</html>

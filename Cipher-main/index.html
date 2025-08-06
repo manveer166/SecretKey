@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SecretShift • Encrypt & Decrypt</title>
+  <meta name="color-scheme" content="dark light" />
+  <style>
+    :root{
+      --bg:#0f172a;          /* slate-900 */
+      --panel:#111827;       /* gray-900 */
+      --panel-2:#0b1223;     /* darker */
+      --text:#e5e7eb;        /* gray-200 */
+      --muted:#9ca3af;       /* gray-400 */
+      --accent:#3b82f6;      /* blue-500 */
+      --accent-2:#60a5fa;    /* blue-400 */
+      --border:#1f2937;      /* gray-800 */
+      --btn:#1f2937;
+      --btn-hover:#2a3547;
+      --radius:14px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Inter,Arial;
+      background:linear-gradient(180deg, var(--bg), #0b1223 60%);
+      color:var(--text);
+    }
+    .wrap{max-width:1100px;margin:28px auto;padding:0 18px}
+    /* Header */
+    .nav{
+      display:flex;align-items:center;gap:14px;justify-content:space-between;
+      padding:16px 18px;margin-bottom:22px;background:var(--panel);
+      border:1px solid var(--border);border-radius:20px;
+      box-shadow:0 10px 24px rgba(0,0,0,.25);
+    }
+    .brand{display:flex;align-items:center;gap:12px}
+    .lock{
+      width:36px;height:36px;border-radius:10px;background:var(--panel-2);
+      display:grid;place-items:center;border:1px solid var(--border);
+      font-weight:700;
+    }
+    h1{font-size:22px;margin:0}
+    .sub{color:var(--muted);font-size:14px}
+    .right{display:flex;align-items:center;gap:12px}
+    .pill{
+      font-size:12px;color:#a7f3d0;background:#064e3b;padding:6px 10px;border-radius:999px;border:1px solid #065f46
+    }
+    .link{color:var(--accent-2);text-decoration:none}
+    .coffee{font-size:13px;color:#f5d19a;text-decoration:none}
+    /* Panels */
+    .card{
+      background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+      padding:18px;margin-bottom:18px;
+    }
+    .label{font-weight:600;margin:0 0 8px}
+    input[type=text], textarea, select{
+      width:100%;background:var(--panel-2);color:var(--text);
+      border:1px solid var(--border);border-radius:12px;padding:12px 14px;
+      outline:none;
+    }
+    textarea{min-height:180px;resize:vertical}
+    .grid{display:grid;gap:18px}
+    @media(min-width:900px){ .grid{grid-template-columns:1fr 1fr} }
+    .row{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{
+      padding:12px 16px;border-radius:12px;border:1px solid var(--border);
+      background:var(--btn);color:var(--text);cursor:pointer
+    }
+    .btn:hover{background:var(--btn-hover)}
+    .btn.primary{
+      border-color:transparent;background:linear-gradient(180deg,var(--accent),#2563eb);
+      box-shadow:0 10px 18px rgba(37,99,235,.35);font-weight:600
+    }
+    .muted{color:var(--muted);font-size:14px}
+    .toolbar{display:flex;gap:10px;align-items:center;margin-top:10px;flex-wrap:wrap}
+    .mode{
+      display:flex;gap:6px;align-items:center;background:var(--panel-2);
+      border:1px solid var(--border);border-radius:999px;padding:6px 8px;font-size:14px
+    }
+    .mode input{accent-color:var(--accent)}
+    .footer{margin:18px 0;color:var(--muted);font-size:1
